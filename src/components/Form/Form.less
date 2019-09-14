@@ -1,0 +1,33 @@
+.ari-ui-form {
+  display: flex;
+
+  .ari-ui-form-item {
+    margin-right: 0px;
+  }
+}
+
+.ari-ui-form-rows {
+  flex-direction: column;
+}
+
+.ari-ui-form-row {
+  display: flex;
+  flex-wrap: wrap;
+
+  > * {
+    margin-right: @row-margin !important;
+  }
+}
+
+.ari-ui-form-columns {
+  flex-wrap: wrap;
+}
+
+.ari-ui-form-column {
+  margin-right: @row-margin;
+  flex: 1;
+}
+
+.ari-ui-form-last-column {
+  margin-right: 0px;
+}

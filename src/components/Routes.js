@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter, Route, Switch } from 'react-router-dom';
-import { Home, Form } from './index';
+import { Home, Form } from '../views';
 
 const Routes = () => (
   <Switch>

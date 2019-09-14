@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Auth } from '../index';
-import { withFirebase } from '../Firebase';
+import { withFirebase } from '../../components/Firebase';
 
 const Home = ({ firebase, user }) => {
   return (

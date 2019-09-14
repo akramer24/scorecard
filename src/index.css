@@ -1,21 +1,3 @@
-#auth-form {
-  padding: 10px;
-}
-#auth-form-footer {
-  display: flex;
-  flex-wrap: wrap;
-}
-#auth-form-submit-button {
-  margin-right: 5px;
-}
-#auth-form-footer-redirect {
-  cursor: pointer;
-  text-decoration: underline;
-  transition: 0.3s;
-}
-#auth-form-footer-redirect:hover {
-  color: #e97373;
-}
 .dropdown-icon {
   width: 35px;
   cursor: pointer;
@@ -83,30 +65,31 @@
   width: 310px;
   padding: 5px;
 }
-#home-user {
+.ari-ui-form {
   display: flex;
+}
+.ari-ui-form .ari-ui-form-item {
+  margin-right: 0px;
+}
+.ari-ui-form-rows {
   flex-direction: column;
-  align-items: center;
 }
-@keyframes loading {
-  0% {
-    height: 200px;
-  }
-  50% {
-    height: 250px;
-  }
-  100% {
-    height: 200px;
-  }
-}
-.loading-image-container {
+.ari-ui-form-row {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+  flex-wrap: wrap;
 }
-.loading-image {
-  animation: loading 1s infinite linear;
+.ari-ui-form-row > * {
+  margin-right: 16px !important;
+}
+.ari-ui-form-columns {
+  flex-wrap: wrap;
+}
+.ari-ui-form-column {
+  margin-right: 16px;
+  flex: 1;
+}
+.ari-ui-form-last-column {
+  margin-right: 0px;
 }
 .ari-ui-btn {
   font-family: 'Ubuntu', sans-serif;
@@ -496,6 +479,49 @@
   animation-name: slide-down;
   animation-duration: 0.3s;
   animation-timing-function: ease-out;
+}
+#auth-form {
+  padding: 10px;
+}
+#auth-form-footer {
+  display: flex;
+  flex-wrap: wrap;
+}
+#auth-form-submit-button {
+  margin-right: 5px;
+}
+#auth-form-footer-redirect {
+  cursor: pointer;
+  text-decoration: underline;
+  transition: 0.3s;
+}
+#auth-form-footer-redirect:hover {
+  color: #e97373;
+}
+#home-user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+@keyframes loading {
+  0% {
+    height: 200px;
+  }
+  50% {
+    height: 250px;
+  }
+  100% {
+    height: 200px;
+  }
+}
+.loading-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.loading-image {
+  animation: loading 1s infinite linear;
 }
 body {
   margin: 0;

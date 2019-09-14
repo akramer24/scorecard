@@ -1,47 +1,59 @@
-import React, { useState } from 'react';
-import { Button, Input, Select } from '../index';
-import useForm from '../../hooks/useForm';
-import { getFormState, getFormContent, getFormSubmitCallback } from '../utils/forms';
+import React from 'react';
+import classNames from 'classnames';
+import uniqid from 'uniqid';
 
-const Form = (props) => {
-  const [error, setError] = useState('');
-
-  const initialState = getFormState(props.match.path);
-  const submitCallback = getFormSubmitCallback(props.match.path);
-
-  const { inputs, handleSubmit, handleChange } = useForm(submitCallback, initialState);
-  // const content = getFormContent(props.match.path, inputs, handleChange);
-  const content = [[
-    <Input
-      name="name"
-      value={inputs.name}
-      onChange={handleChange}
-      type="text"
-      placeholder="League name"
-      label="League name"
-    />,
-    <Select
-      name="sport"
-      value={inputs.sport}
-      onChange={handleChange}
-      choices={['Baseball', 'Basketball']}
-      placeholder="Sport"
-      label="Sport"
-    />,
-    <Select
-      name="season"
-      value={inputs.season}
-      onChange={handleChange}
-      choices={['2019', '2019-20']}
-      placeholder="Season"
-      label="Season"
-    />,
-    <Button onClick={() => console.log(inputs)}>Next</Button>
-  ]]
+const Form = ({
+  columnWidth,
+  content,
+  direction,
+  onSubmit
+}) => {
+  const handleSubmit = evt => {
+    evt.stopPropagation();
+    evt.preventDefault();
+    onSubmit && onSubmit(evt);
+  }
 
   return (
-    <div>hi</div>
-  );
+    <form
+      className={classNames(
+        'ari-ui-form',
+        {
+          'ari-ui-form-columns': direction === 'columns',
+          'ari-ui-form-rows': direction === 'rows'
+        }
+      )}
+      onSubmit={handleSubmit}
+    >
+      {content.map((group, idx) => {
+        return (
+          <div
+            className={classNames({
+              'ari-ui-form-row': direction === 'rows', 'ari-ui-form-column': direction === 'columns',
+              'ari-ui-form-last-column': direction === 'columns' && idx === content.length - 1
+            })}
+            key={uniqid()}
+            style={direction === 'columns' ? { maxWidth: columnWidth, width: columnWidth } : {}}
+          >
+            {group.map(el => React.cloneElement(
+              el,
+              {
+                ...el.props,
+                key: uniqid(),
+                style: direction === 'rows' ? { maxWidth: columnWidth, width: columnWidth } : {}
+              }
+            ))}
+          </div>
+        )
+      })}
+    </form>
+  )
+}
+
+Form.defaultProps = {
+  columnWidth: 250,
+  content: [],
+  direction: 'columns'
 }
 
 export default Form;

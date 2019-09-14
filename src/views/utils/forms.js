@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Input, Select } from '../index';
+import { Button, Input, Select } from '../../components';
 
 // Keys must match name attributes of Input fields
 const initialCreateLeagueFormState = {

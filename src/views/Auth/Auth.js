@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Button, Input } from '../index';
-import { withFirebase } from '../Firebase';
+import { Button, Input } from '../../components';
+import { withFirebase } from '../../components/Firebase';
 import useForm from '../../hooks/useForm';
 
 const Auth = ({ authFormError, firebase }) => {
