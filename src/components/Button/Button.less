@@ -1,0 +1,56 @@
+@btn-height: 30px;
+
+.ari-ui-btn {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 16px;
+  height: @btn-height;
+  border-radius: 3px;
+  outline: none;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    .box-shadow(3px);
+  }
+
+  &:active {
+    animation-name: button-clicked;
+    animation-duration: 0.3s;
+  }
+}
+
+.ari-ui-btn-default {
+  background-color: white;
+  color: @primary-color;
+}
+
+.ari-ui-btn-primary {
+  background-color: @primary-color;
+  color: @tertiary-color;
+}
+
+.ari-ui-btn-danger {
+  background-color: @error-color;
+  color: @tertiary-color;
+}
+
+.ari-ui-btn-disabled {
+  background-color: @secondary-color;
+  color: @disabled-text-color;
+  cursor: not-allowed;
+
+  &:hover {
+    box-shadow: none;
+  }
+}
+
+.ari-ui-btn-rounded-edge {
+  border-radius: calc(@btn-height / 2);
+}
+
+@keyframes button-clicked {
+  0% { transform: translateY(0px) };
+  50% { transform: translateY(-5px) };
+  100% { transform: translateY(0px) };
+}

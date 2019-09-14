@@ -3,13 +3,30 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "classnames": "^2.2.6",
+    "firebase": "^6.6.0",
+    "history": "^4.9.0",
+    "less": "^3.10.3",
+    "less-watch-compiler": "^1.14.1",
+    "moment": "^2.24.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-scripts": "3.1.1"
+    "react-icons": "^3.7.0",
+    "react-redux": "^7.1.1",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "3.1.1",
+    "redux": "^4.0.4",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "uniqid": "^5.0.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts start & yarn run watch-css",
+    "build": "yarn build-css && react-scripts build",
+    "build-css": "lessc src/index.less src/index.css",
+    "watch-css": "less-watch-compiler src src index.less",
+    "deploy": "yarn build && firebase deploy",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

@@ -1,0 +1,58 @@
+.ari-ui-dropdown {
+  position: absolute;
+  z-index: 99;
+  margin-top: 5px;
+  overflow: auto;
+  background-color: white;
+  .box-shadow(@size: 3px, @color: @secondary-color);
+  border-radius: 5px;
+  .ari-ui-slide-down();
+
+  &-choice {
+    display: flex;
+    align-items: center;
+    color: @primary-color;
+    cursor: pointer;
+    font-size: 12px;
+  }
+
+  &-choice-active {
+    background-color: @tertiary-color;
+  }
+}
+
+.ari-ui-select-container {
+  z-index: 100;
+}
+
+.ari-ui-non-searchable-select-input .ari-ui-input {
+  cursor: pointer;
+}
+
+.ari-ui-select-caret {
+  cursor: pointer;
+}
+
+.ari-ui-select-caret-open {
+  animation-name: open-caret;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+.ari-ui-select-caret-closed {
+  animation-name: close-caret;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes open-caret {
+  from { transform: rotateX(0deg) };
+  to { transform: rotateX(180deg) }
+}
+
+@keyframes close-caret {
+  from { transform: rotateX(180deg) }
+  to { transform: rotateX(0deg) };
+}

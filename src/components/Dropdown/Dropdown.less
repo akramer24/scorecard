@@ -1,0 +1,83 @@
+@dropdownBorderRadius: 5px;
+@dropdownCaretHeight: 7px;
+
+.dropdown-icon {
+  width: 35px;
+  cursor: pointer;
+}
+
+.dropdown-icon:hover {
+  color: @tertiary-color;
+  transition: 0.3s;
+}
+
+.active-dropdown {
+  color: @tertiary-color;
+}
+
+.dropdown {
+  position: relative;
+  margin: 0px 5px;
+}
+
+.dropdown-menu-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: @secondary-color ;
+  width: 140px;
+  border-radius: @dropdownBorderRadius;
+  box-shadow: 0px 1px 2px 0px;
+  top: @dropdownCaretHeight;
+}
+
+.dropdown-menu-left {
+  left: 0;
+}
+
+.dropdown-menu-right {
+  right: 0;
+}
+
+.dropdown-menu-caret {
+  height: 0;
+  position: absolute;
+  left: 5px;
+  width: 0;
+  z-index: 2;
+  border-left: @dropdownCaretHeight solid transparent;
+  border-right: @dropdownCaretHeight solid transparent;
+  border-bottom: @dropdownCaretHeight solid @secondary-color;
+}
+
+.dropdown-menu-item {
+  padding: 5px;
+}
+
+.dropdown-menu-item:hover {
+  cursor: pointer;
+  color: @tertiary-color;
+  background-color: @tertiary-color;
+}
+
+.first-dropdown-item {
+  border-top-left-radius: @dropdownBorderRadius;
+  border-top-right-radius: @dropdownBorderRadius;
+}
+
+.last-dropdown-item {
+  border-bottom-left-radius: @dropdownBorderRadius;
+  border-bottom-right-radius: @dropdownBorderRadius;
+}
+
+.user-dropdown {
+  width: 310px;
+  padding: 5px;
+}

@@ -1,26 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { connect } from 'react-redux';
+import { Dropdown, Routes } from './components';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const choices = [
+  { value: 'Create league', onClick: () => { } },
+  { value: 'Join league', onClick: () => { } },
+]
 
-export default App;
+const App = ({ user }) => (
+  <React.Fragment>
+    {
+      !!user
+        ? (
+          <div id="header">
+            <Dropdown choices={choices} icon="FaBars" />
+            <div id="header-text">Scorecard</div>
+          </div>
+        )
+        : null
+    }
+    <Routes />
+  </React.Fragment>
+)
+
+const mapState = state => ({
+  user: state.auth.user
+})
+
+export default connect(mapState, null)(App);

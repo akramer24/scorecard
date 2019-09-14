@@ -1,13 +1,598 @@
+#auth-form {
+  padding: 10px;
+}
+#auth-form-footer {
+  display: flex;
+  flex-wrap: wrap;
+}
+#auth-form-submit-button {
+  margin-right: 5px;
+}
+#auth-form-footer-redirect {
+  cursor: pointer;
+  text-decoration: underline;
+  transition: 0.3s;
+}
+#auth-form-footer-redirect:hover {
+  color: #e97373;
+}
+.dropdown-icon {
+  width: 35px;
+  cursor: pointer;
+}
+.dropdown-icon:hover {
+  color: #b0d8fd;
+  transition: 0.3s;
+}
+.active-dropdown {
+  color: #b0d8fd;
+}
+.dropdown {
+  position: relative;
+  margin: 0px 5px;
+}
+.dropdown-menu-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.dropdown-menu {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #a2a2a2;
+  width: 140px;
+  border-radius: 5px;
+  box-shadow: 0px 1px 2px 0px;
+  top: 7px;
+}
+.dropdown-menu-left {
+  left: 0;
+}
+.dropdown-menu-right {
+  right: 0;
+}
+.dropdown-menu-caret {
+  height: 0;
+  position: absolute;
+  left: 5px;
+  width: 0;
+  z-index: 2;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #a2a2a2;
+}
+.dropdown-menu-item {
+  padding: 5px;
+}
+.dropdown-menu-item:hover {
+  cursor: pointer;
+  color: #b0d8fd;
+  background-color: #b0d8fd;
+}
+.first-dropdown-item {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.last-dropdown-item {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.user-dropdown {
+  width: 310px;
+  padding: 5px;
+}
+#home-user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+@keyframes loading {
+  0% {
+    height: 200px;
+  }
+  50% {
+    height: 250px;
+  }
+  100% {
+    height: 200px;
+  }
+}
+.loading-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.loading-image {
+  animation: loading 1s infinite linear;
+}
+.ari-ui-btn {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 16px;
+  height: 30px;
+  border-radius: 3px;
+  outline: none;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.ari-ui-btn:hover {
+  box-shadow: 0px 0px 3px 1px #000075;
+}
+.ari-ui-btn:active {
+  animation-name: button-clicked;
+  animation-duration: 0.3s;
+}
+.ari-ui-btn-default {
+  background-color: white;
+  color: #000075;
+}
+.ari-ui-btn-primary {
+  background-color: #000075;
+  color: #b0d8fd;
+}
+.ari-ui-btn-danger {
+  background-color: #bf0000;
+  color: #b0d8fd;
+}
+.ari-ui-btn-disabled {
+  background-color: #a2a2a2;
+  color: #e4e4e4;
+  cursor: not-allowed;
+}
+.ari-ui-btn-disabled:hover {
+  box-shadow: none;
+}
+.ari-ui-btn-rounded-edge {
+  border-radius: calc(30px / 2);
+}
+@keyframes button-clicked {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+.ari-ui-calendar-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #000075;
+  color: #b0d8fd;
+  border-radius: 3px;
+  padding: 5px;
+}
+.ari-ui-calendar-header {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  font-size: 20px;
+  border-bottom: 1px solid;
+  padding-bottom: 5px;
+}
+.ari-ui-calendar-navigation-arrow {
+  cursor: pointer;
+  transition: 0.3s;
+}
+.ari-ui-calendar-navigation-arrow:hover {
+  color: #a2a2a2;
+}
+.ari-ui-calendar-body {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(40px, 5fr));
+  justify-items: center;
+}
+.ari-ui-calendar-cell-container {
+  width: 100%;
+  text-align: right;
+  border: 1px solid #a2a2a2;
+  height: 60px;
+  background-color: white;
+  color: #000075;
+}
+.ari-ui-calendar-cell-active {
+  transition: 0.3s;
+  cursor: pointer;
+}
+.ari-ui-calendar-cell-active:hover {
+  background-color: #b0d8fd;
+}
+.ari-ui-calendar-cell-selected {
+  background: #b0d8fd;
+}
+.ari-ui-calendar-date-cell {
+  margin-right: 5px;
+}
+.ari-ui-calendar-date-cell-inactive {
+  color: #a2a2a2;
+}
+.ari-ui-calendar-event {
+  text-align: left;
+  font-size: 12px;
+  padding-left: 5px;
+  transition: 0.3s;
+}
+.ari-ui-calendar-event:hover {
+  color: #a2a2a2;
+}
+.ari-ui-card {
+  min-width: 150px;
+  height: fit-content;
+}
+.ari-ui-card-bordered {
+  box-shadow: 0px 0px 1px 1px #a2a2a2;
+}
+.ari-ui-small-padding {
+  padding: 5px;
+}
+.ari-ui-checkbox {
+  height: 18px;
+  width: 18px;
+  appearance: none;
+  background-color: #fafafa;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+  padding: 9px;
+  border-radius: 3px;
+  display: inline-block;
+  position: relative;
+  border: 1px solid #000075;
+  font-size: 14px;
+  transition: 0.3s;
+}
+.ari-ui-checkbox:checked {
+  background-color: #e9ecee;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1);
+  color: #99a1a7;
+}
+.ari-ui-checkbox:active,
+.ari-ui-checkbox:checked:active {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+.ari-ui-checkbox:checked:after {
+  content: '\2714';
+  font-size: 14px;
+  position: absolute;
+  top: 0px;
+  left: 3px;
+  color: #000075;
+}
+.ari-ui-checkbox:focus {
+  outline: none;
+  border: none;
+  box-shadow: 0px 0px 10px 1px #000075;
+  border: 1px solid #000075;
+  font-size: 14px;
+  transition: 0.3s;
+}
+.ari-ui-flex-column {
+  display: flex;
+  flex-direction: column;
+}
+.ari-ui-flex-column > * {
+  margin-bottom: 16px !important;
+}
+.ari-ui-divider {
+  background-color: #a2a2a2;
+}
+.ari-ui-divider-vertical {
+  width: 1px;
+  height: 100%;
+}
+.ari-ui-divider-horizontal {
+  width: 100%;
+  height: 1px;
+}
+.ari-ui-input-container {
+  display: flex;
+  flex-grow: 1;
+  height: 32px;
+  position: relative;
+}
+.ari-ui-input {
+  border: 1px solid #000075;
+  font-size: 14px;
+  transition: 0.3s;
+  padding-left: 12px;
+  flex-grow: 1;
+  border-radius: 15px;
+}
+.ari-ui-input:focus {
+  outline: none;
+  border: none;
+  box-shadow: 0px 0px 10px 1px #000075;
+}
+.ari-ui-input-suffix {
+  position: absolute;
+  right: 12px;
+  font-size: 20px;
+  color: #000075;
+  top: calc(50% - 10px);
+}
+.ari-ui-modal-container {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+}
+.ari-ui-modal-overlay {
+  position: absolute;
+  z-index: 100;
+  height: 100%;
+  width: 100%;
+  background: rgba(80, 80, 80, 0.4);
+}
+.ari-ui-modal-dialog {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.ari-ui-modal {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  z-index: 2000;
+  width: 80vw;
+  height: 50vh;
+  background: white;
+  box-shadow: 0px 0px 5px 1px #6b4e42;
+  border-radius: 10px;
+  animation-name: modal-appear;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+}
+.ari-ui-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px 10px 20px;
+}
+.ari-ui-modal-title {
+  font-size: 24px;
+}
+.ari-ui-modal-x {
+  transition: 0.3s;
+  color: #b1acac;
+}
+.ari-ui-modal-x:hover {
+  background-color: #a2a2a2;
+  border-radius: 10px;
+}
+.ari-ui-modal-content {
+  padding: 10px 20px 10px 20px;
+  flex: 1;
+}
+.ari-ui-modal-footer {
+  padding: 10px 20px 10px 20px;
+}
+@keyframes modal-appear {
+  0% {
+    transform: translateY(-50vh);
+  }
+  40% {
+    transform: translateY(10vh);
+  }
+  100% {
+    transform: translateY(0vh);
+  }
+}
+.ari-ui-flex-row {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 16px;
+}
+.ari-ui-flex-row > * {
+  margin-right: 16px;
+  margin-bottom: 0 !important;
+}
+.ari-ui-dropdown {
+  position: absolute;
+  z-index: 99;
+  margin-top: 5px;
+  overflow: auto;
+  background-color: white;
+  box-shadow: 0px 0px 3px 1px #a2a2a2;
+  border-radius: 5px;
+  animation-name: slide-down;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+}
+.ari-ui-dropdown-choice {
+  display: flex;
+  align-items: center;
+  color: #000075;
+  cursor: pointer;
+  font-size: 12px;
+}
+.ari-ui-dropdown-choice-active {
+  background-color: #b0d8fd;
+}
+.ari-ui-select-container {
+  z-index: 100;
+}
+.ari-ui-non-searchable-select-input .ari-ui-input {
+  cursor: pointer;
+}
+.ari-ui-select-caret {
+  cursor: pointer;
+}
+.ari-ui-select-caret-open {
+  animation-name: open-caret;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+.ari-ui-select-caret-closed {
+  animation-name: close-caret;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+@keyframes open-caret {
+  from {
+    transform: rotateX(0deg);
+  }
+  to {
+    transform: rotateX(180deg);
+  }
+}
+@keyframes close-caret {
+  from {
+    transform: rotateX(180deg);
+  }
+  to {
+    transform: rotateX(0deg);
+  }
+}
+.ari-ui-text-area-container {
+  display: flex;
+}
+.ari-ui-text-area {
+  border: 1px solid #000075;
+  font-size: 14px;
+  transition: 0.3s;
+  padding-left: 12px;
+  border-radius: 15px 15px 0px 15px;
+  padding-top: 12px;
+  flex: 1;
+}
+.ari-ui-text-area:focus {
+  outline: none;
+  border: none;
+  box-shadow: 0px 0px 10px 1px #000075;
+}
+.ari-ui-text-area-no-resize {
+  resize: none;
+  border-radius: 15px;
+}
+.ari-ui-form-item {
+  display: flex;
+  margin-bottom: 16px;
+  margin-right: 16px;
+}
+.ari-ui-form-item-label {
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+.ari-ui-form-item-with-label-left {
+  align-items: center;
+}
+.ari-ui-form-item-with-label-top {
+  flex-direction: column;
+}
+.ari-ui-form-item-error {
+  position: absolute;
+  margin: 0;
+  padding-left: 12px;
+  font-size: 12px;
+  color: #bf0000;
+  z-index: 5;
+  animation-name: slide-down;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+}
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: 'Ubuntu', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+#header {
+  display: flex;
+  align-items: center;
+  background-color: #a2a2a2;
+  box-shadow: 0px 0px 1px 1px;
+  margin-bottom: 5px;
+}
+#header-text {
+  font-size: 24px;
+}
+.ari-ui-padded-content {
+  padding: 10px 20px 10px 20px;
+}
+.ari-ui-flow-right {
+  display: flex;
+  justify-content: flex-end;
+}
+.ari-ui-form-field {
+  border: 1px solid #000075;
+  font-size: 14px;
+  transition: 0.3s;
+}
+.ari-ui-text-box {
+  border: 1px solid #000075;
+  font-size: 14px;
+  transition: 0.3s;
+  padding-left: 12px;
+}
+.ari-ui-text-box-focused {
+  outline: none;
+  border: none;
+  box-shadow: 0px 0px 10px 1px #000075;
+}
+.ari-ui-slide-down {
+  animation-name: slide-down;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+}
+@keyframes slide-down {
+  from {
+    transform: translateY(-32px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+.ari-ui-justify-center {
+  justify-content: center;
+}
+.ari-ui-justify-start {
+  justify-content: flex-start;
+}
+.ari-ui-justify-end {
+  justify-content: flex-end;
+}
+.ari-ui-justify-even {
+  justify-content: space-evenly;
+}
+.ari-ui-justify-between {
+  justify-content: space-between;
+}
+.ari-ui-justify-around {
+  justify-content: space-around;
+}
+.ari-ui-align-center {
+  align-items: center;
+}
+.ari-ui-align-start {
+  align-items: flex-start;
+}
+.ari-ui-align-end {
+  align-items: flex-end;
+}
+.ari-ui-align-even {
+  align-items: space-evenly;
+}
+.ari-ui-align-between {
+  align-items: space-between;
+}
+.ari-ui-align-around {
+  align-items: space-around;
+}
+.ari-ui-wrap {
+  flex-wrap: wrap;
+}
+.ari-ui-header-medium {
+  font-size: 20px;
 }
