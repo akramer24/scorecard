@@ -8,19 +8,21 @@
 @import './components/Divider/Divider.less';
 @import './components/Form/Form.less';
 @import './components/Input/Input.less';
+@import './components/Load/Load.less';
 @import './components/Modal/Modal.less';
 @import './components/Row//Row.less';
 @import './components/Select/Select.less';
 @import './components/TextArea/TextArea.less';
 @import './components/hocs/index.less';
 @import './views/Auth/Auth.less';
-@import './views/Form/Form.less';
+@import './views/CreateLeague/CreateLeague.less';
 @import './views/Home/Home.less';
+@import './views/LeaguePortal/LeaguePortal.less';
 @import './mixins.less';
 
-@primary-color: #000075;
-@secondary-color: #a2a2a2;
-@tertiary-color: #b0d8fd;
+@primary-color: #12125e;
+@secondary-color: #dadada;
+@tertiary-color: #e3f9ff;
 @error-color: #bf0000;
 @disabled-text-color: #e4e4e4;
 @ari-ui-text-box-padding: 12px;
@@ -31,11 +33,22 @@ body {
   font-family: 'Ubuntu', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+  color: @primary-color;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+#root {
+  height: 100vh;
+}
+
+.hoverable-text {
+  cursor: pointer;
+  color: @tertiary-color;
 }
 
 #header {
@@ -48,6 +61,9 @@ code {
 
 #header-text {
   font-size: 24px;
+  &:hover {
+    .hoverable-text;
+  }
 }
 
 .ari-ui-padded-content {
@@ -141,4 +157,9 @@ code {
 
 .ari-ui-header-medium {
   font-size: 20px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
 }

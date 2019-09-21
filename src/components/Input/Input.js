@@ -34,7 +34,7 @@ const Input = React.forwardRef(({
     onKeyDown,
     placeholder,
     tabindex
-  }, isUndefined)
+  }, isUndefined);
 
   return (
     <div

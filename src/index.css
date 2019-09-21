@@ -3,11 +3,11 @@
   cursor: pointer;
 }
 .dropdown-icon:hover {
-  color: #b0d8fd;
+  color: #e3f9ff;
   transition: 0.3s;
 }
 .active-dropdown {
-  color: #b0d8fd;
+  color: #e3f9ff;
 }
 .dropdown {
   position: relative;
@@ -23,7 +23,7 @@
   z-index: 1;
   display: flex;
   flex-direction: column;
-  background-color: #a2a2a2;
+  background-color: #dadada;
   width: 140px;
   border-radius: 5px;
   box-shadow: 0px 1px 2px 0px;
@@ -43,15 +43,14 @@
   z-index: 2;
   border-left: 7px solid transparent;
   border-right: 7px solid transparent;
-  border-bottom: 7px solid #a2a2a2;
+  border-bottom: 7px solid #dadada;
 }
 .dropdown-menu-item {
   padding: 5px;
 }
 .dropdown-menu-item:hover {
   cursor: pointer;
-  color: #b0d8fd;
-  background-color: #b0d8fd;
+  color: #e3f9ff;
 }
 .first-dropdown-item {
   border-top-left-radius: 5px;
@@ -102,7 +101,7 @@
   transition: 0.3s;
 }
 .ari-ui-btn:hover {
-  box-shadow: 0px 0px 3px 1px #000075;
+  box-shadow: 0px 0px 3px 1px #12125e;
 }
 .ari-ui-btn:active {
   animation-name: button-clicked;
@@ -110,18 +109,18 @@
 }
 .ari-ui-btn-default {
   background-color: white;
-  color: #000075;
+  color: #12125e;
 }
 .ari-ui-btn-primary {
-  background-color: #000075;
-  color: #b0d8fd;
+  background-color: #12125e;
+  color: #e3f9ff;
 }
 .ari-ui-btn-danger {
   background-color: #bf0000;
-  color: #b0d8fd;
+  color: #e3f9ff;
 }
 .ari-ui-btn-disabled {
-  background-color: #a2a2a2;
+  background-color: #dadada;
   color: #e4e4e4;
   cursor: not-allowed;
 }
@@ -145,8 +144,8 @@
 .ari-ui-calendar-container {
   display: flex;
   flex-direction: column;
-  background-color: #000075;
-  color: #b0d8fd;
+  background-color: #12125e;
+  color: #e3f9ff;
   border-radius: 3px;
   padding: 5px;
 }
@@ -163,7 +162,7 @@
   transition: 0.3s;
 }
 .ari-ui-calendar-navigation-arrow:hover {
-  color: #a2a2a2;
+  color: #dadada;
 }
 .ari-ui-calendar-body {
   display: grid;
@@ -173,26 +172,26 @@
 .ari-ui-calendar-cell-container {
   width: 100%;
   text-align: right;
-  border: 1px solid #a2a2a2;
+  border: 1px solid #dadada;
   height: 60px;
   background-color: white;
-  color: #000075;
+  color: #12125e;
 }
 .ari-ui-calendar-cell-active {
   transition: 0.3s;
   cursor: pointer;
 }
 .ari-ui-calendar-cell-active:hover {
-  background-color: #b0d8fd;
+  background-color: #e3f9ff;
 }
 .ari-ui-calendar-cell-selected {
-  background: #b0d8fd;
+  background: #e3f9ff;
 }
 .ari-ui-calendar-date-cell {
   margin-right: 5px;
 }
 .ari-ui-calendar-date-cell-inactive {
-  color: #a2a2a2;
+  color: #dadada;
 }
 .ari-ui-calendar-event {
   text-align: left;
@@ -201,14 +200,14 @@
   transition: 0.3s;
 }
 .ari-ui-calendar-event:hover {
-  color: #a2a2a2;
+  color: #dadada;
 }
 .ari-ui-card {
   min-width: 150px;
   height: fit-content;
 }
 .ari-ui-card-bordered {
-  box-shadow: 0px 0px 1px 1px #a2a2a2;
+  box-shadow: 0px 0px 1px 1px #dadada;
 }
 .ari-ui-small-padding {
   padding: 5px;
@@ -223,7 +222,7 @@
   border-radius: 3px;
   display: inline-block;
   position: relative;
-  border: 1px solid #000075;
+  border: 1px solid #12125e;
   font-size: 14px;
   transition: 0.3s;
 }
@@ -242,13 +241,13 @@
   position: absolute;
   top: 0px;
   left: 3px;
-  color: #000075;
+  color: #12125e;
 }
 .ari-ui-checkbox:focus {
   outline: none;
   border: none;
-  box-shadow: 0px 0px 10px 1px #000075;
-  border: 1px solid #000075;
+  box-shadow: 0px 0px 10px 1px #12125e;
+  border: 1px solid #12125e;
   font-size: 14px;
   transition: 0.3s;
 }
@@ -260,7 +259,7 @@
   margin-bottom: 16px !important;
 }
 .ari-ui-divider {
-  background-color: #a2a2a2;
+  background-color: #dadada;
 }
 .ari-ui-divider-vertical {
   width: 1px;
@@ -277,7 +276,7 @@
   position: relative;
 }
 .ari-ui-input {
-  border: 1px solid #000075;
+  border: 1px solid #12125e;
   font-size: 14px;
   transition: 0.3s;
   padding-left: 12px;
@@ -287,14 +286,53 @@
 .ari-ui-input:focus {
   outline: none;
   border: none;
-  box-shadow: 0px 0px 10px 1px #000075;
+  box-shadow: 0px 0px 10px 1px #12125e;
 }
 .ari-ui-input-suffix {
   position: absolute;
   right: 12px;
   font-size: 20px;
-  color: #000075;
+  color: #12125e;
   top: calc(50% - 10px);
+}
+.loading-mask {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loading-mask .loading-dot {
+  height: 14px;
+  width: 14px;
+  border-radius: calc(14px / 2);
+  background-color: #12125e;
+  margin: 0px 4px;
+  animation-name: load;
+  animation-duration: 0.8s;
+  animation-iteration-count: infinite;
+}
+.loading-mask .loading-dot-inner {
+  animation-delay: 0.4s;
+}
+@keyframes load {
+  0% {
+    height: 14px;
+    width: 14px;
+    border-radius: calc(14px / 2);
+  }
+  50% {
+    height: 20px;
+    width: 20px;
+    border-radius: 10px;
+  }
+  100% {
+    height: 14px;
+    width: 14px;
+    border-radius: calc(14px / 2);
+  }
 }
 .ari-ui-modal-container {
   position: absolute;
@@ -344,7 +382,7 @@
   color: #b1acac;
 }
 .ari-ui-modal-x:hover {
-  background-color: #a2a2a2;
+  background-color: #dadada;
   border-radius: 10px;
 }
 .ari-ui-modal-content {
@@ -380,7 +418,7 @@
   margin-top: 5px;
   overflow: auto;
   background-color: white;
-  box-shadow: 0px 0px 3px 1px #a2a2a2;
+  box-shadow: 0px 0px 3px 1px #dadada;
   border-radius: 5px;
   animation-name: slide-down;
   animation-duration: 0.3s;
@@ -389,12 +427,12 @@
 .ari-ui-dropdown-choice {
   display: flex;
   align-items: center;
-  color: #000075;
+  color: #12125e;
   cursor: pointer;
   font-size: 12px;
 }
 .ari-ui-dropdown-choice-active {
-  background-color: #b0d8fd;
+  background-color: #e3f9ff;
 }
 .ari-ui-select-container {
   z-index: 100;
@@ -437,7 +475,7 @@
   display: flex;
 }
 .ari-ui-text-area {
-  border: 1px solid #000075;
+  border: 1px solid #12125e;
   font-size: 14px;
   transition: 0.3s;
   padding-left: 12px;
@@ -448,7 +486,7 @@
 .ari-ui-text-area:focus {
   outline: none;
   border: none;
-  box-shadow: 0px 0px 10px 1px #000075;
+  box-shadow: 0px 0px 10px 1px #12125e;
 }
 .ari-ui-text-area-no-resize {
   resize: none;
@@ -457,7 +495,6 @@
 .ari-ui-form-item {
   display: flex;
   margin-bottom: 16px;
-  margin-right: 16px;
 }
 .ari-ui-form-item-label {
   margin-bottom: 4px;
@@ -482,6 +519,11 @@
 }
 #auth-form {
   padding: 10px;
+  height: 100%;
+  background-image: url(scorecard.jpg);
+  background-size: cover;
+  text-shadow: 0px 1px 1px #dadada;
+  color: #12125e;
 }
 #auth-form-footer {
   display: flex;
@@ -497,6 +539,16 @@
 }
 #auth-form-footer-redirect:hover {
   color: #e97373;
+}
+.form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+#home {
+  height: 100%;
 }
 #home-user {
   display: flex;
@@ -528,19 +580,32 @@ body {
   font-family: 'Ubuntu', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+  color: #12125e;
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+#root {
+  height: 100vh;
+}
+.hoverable-text {
+  cursor: pointer;
+  color: #e3f9ff;
+}
 #header {
   display: flex;
   align-items: center;
-  background-color: #a2a2a2;
+  background-color: #dadada;
   box-shadow: 0px 0px 1px 1px;
   margin-bottom: 5px;
 }
 #header-text {
   font-size: 24px;
+}
+#header-text:hover {
+  cursor: pointer;
+  color: #e3f9ff;
 }
 .ari-ui-padded-content {
   padding: 10px 20px 10px 20px;
@@ -550,12 +615,12 @@ code {
   justify-content: flex-end;
 }
 .ari-ui-form-field {
-  border: 1px solid #000075;
+  border: 1px solid #12125e;
   font-size: 14px;
   transition: 0.3s;
 }
 .ari-ui-text-box {
-  border: 1px solid #000075;
+  border: 1px solid #12125e;
   font-size: 14px;
   transition: 0.3s;
   padding-left: 12px;
@@ -563,7 +628,7 @@ code {
 .ari-ui-text-box-focused {
   outline: none;
   border: none;
-  box-shadow: 0px 0px 10px 1px #000075;
+  box-shadow: 0px 0px 10px 1px #12125e;
 }
 .ari-ui-slide-down {
   animation-name: slide-down;
@@ -621,4 +686,8 @@ code {
 }
 .ari-ui-header-medium {
   font-size: 20px;
+}
+.column {
+  display: flex;
+  flex-direction: column;
 }

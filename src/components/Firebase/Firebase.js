@@ -1,6 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import uniqid from 'uniqid';
 import { firebaseConfig } from '../../secrets';
 import store, { showFormError, removeFormError, setCurrentUser, removeCurrentUser } from '../../store';
 
@@ -54,6 +55,25 @@ class Firebase {
 
   doPasswordUpdate = password =>
     this.auth.currentUser.updatePassword(password);
+
+  doCreateLeague = async body => {
+    try {
+      const leagueId = uniqid();
+      const user = this.getCurrentUser();
+      const leagueInfo = { ...body, admins: [user.uid] };
+      await this.db.collection('leagues').doc(leagueId).set(leagueInfo);
+      const userRef = await this.db.collection('users').doc(user.uid);
+      userRef.update({
+        memberOfLeagues: [leagueId],
+        adminForLeauges: [leagueId]
+      });
+      return leagueId;
+      // const league = await this.db.collection('leagues').doc(leagueId).get();
+      // return league.data();
+    } catch (err) {
+      console.log(err);
+    }
+  }
 }
 
 export default Firebase;

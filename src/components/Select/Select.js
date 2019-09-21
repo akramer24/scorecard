@@ -14,7 +14,6 @@ class Select extends React.Component {
     choices: [],
     placeholder: 'Select',
     searchable: true,
-    value: ''
   };
 
   constructor(props) {
@@ -23,7 +22,6 @@ class Select extends React.Component {
       activeChoiceIndex: 0,
       filteredChoices: props.choices,
       isDropdownVisible: false,
-      value: props.value
     };
 
     this.id = uniqid();
@@ -43,6 +41,15 @@ class Select extends React.Component {
     this.inputRef = React.createRef();
     this.choiceHeight = 24;
     this.maxToShow = 10;
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (!props.value.length) {
+      return {
+        filteredChoices: props.choices
+      }
+    }
+    return null;
   }
 
   componentDidMount() {
@@ -72,8 +79,9 @@ class Select extends React.Component {
 
   handleSelectChoice() {
     const { activeChoiceIndex, filteredChoices } = this.state;
+    const value = filteredChoices[activeChoiceIndex];
+    this.props.onSelectChoice && this.props.onSelectChoice(value)
     this.setState({
-      value: filteredChoices[activeChoiceIndex],
       isDropdownVisible: false
     }, () => this.inputRef.current.blur());
   }
@@ -83,7 +91,7 @@ class Select extends React.Component {
     const newState = { value, activeChoiceIndex: 0 };
     if (this.props.searchable) {
       newState.filteredChoices =
-        value.length <= this.state.value.length
+        value.length <= this.props.value.length
           ? Select.filterChoices(this.props.choices, value)
           : Select.filterChoices(this.state.filteredChoices, value);
       const dropdown = document.querySelector(`#${this.dropdownId} .ari-ui-dropdown`);
@@ -148,8 +156,8 @@ class Select extends React.Component {
   }
 
   render() {
-    const { activeChoiceIndex, filteredChoices, isDropdownVisible, value } = this.state;
-    const { placeholder, searchable } = this.props;
+    const { activeChoiceIndex, filteredChoices, isDropdownVisible } = this.state;
+    const { placeholder, searchable, value } = this.props;
 
     return (
       <div id={this.id} className="ari-ui-select-container">
@@ -207,6 +215,12 @@ Select.propTypes = {
    * Placeholder text.
    */
   placeholder: PropTypes.string,
+  /**
+   * Callback triggered on selecting a choice.
+   * 
+   * @param value str Selected value
+   */
+  onSelectChoice: PropTypes.func,
   /**
    * If true, typing into input will filter choices.
    */
