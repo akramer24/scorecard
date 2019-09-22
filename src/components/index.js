@@ -11,5 +11,6 @@ export { default as Load } from './Load/Load';
 export { default as Modal } from './Modal/Modal';
 export { default as Row } from './Row/Row';
 export { default as Select } from './Select/Select';
+export { default as Tabs } from './Tabs/Tabs';
 export { default as TextArea } from './TextArea/TextArea';
 export * from './hocs';

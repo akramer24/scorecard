@@ -471,6 +471,30 @@
     transform: rotateX(0deg);
   }
 }
+.ari-ui-tabs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.ari-ui-tabs-bar {
+  display: flex;
+}
+.ari-ui-tabs-content {
+  padding: 10px;
+}
+.ari-ui-tabs .ari-ui-tab {
+  padding: 0px 5px;
+  transition: 0.3s;
+  font-size: 20px;
+}
+.ari-ui-tabs .ari-ui-tab:hover {
+  cursor: pointer;
+  color: #dadada;
+}
+.ari-ui-tabs .ari-ui-tab-active {
+  border-bottom: 3px solid;
+}
 .ari-ui-text-area-container {
   display: flex;
 }
@@ -698,4 +722,7 @@ code {
 }
 .page-header {
   font-size: 30px;
+}
+.medium-header {
+  font-size: 20px;
 }

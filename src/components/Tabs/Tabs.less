@@ -1,0 +1,28 @@
+.ari-ui-tabs {
+  .column();
+  align-items: center;
+  width: 100%;
+
+  &-bar {
+    display: flex;
+  }
+
+  &-content {
+    padding: 10px;
+  }
+
+  .ari-ui-tab {
+    padding: 0px 5px;
+    transition: 0.3s;
+    .medium-header();
+
+    &:hover {
+      cursor: pointer;
+      color: @secondary-color;
+    }
+
+    &-active {
+      border-bottom: 3px solid;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Load } from '../../components';
+import { Load, Tabs } from '../../components';
 import { withFirebase } from '../../components/Firebase';
 
 const UserPortal = ({ authUser, firebase, leagues, match, user }) => {
@@ -34,6 +34,7 @@ const UserPortal = ({ authUser, firebase, leagues, match, user }) => {
                   ) : null
                 })
               }
+              <Tabs defaultActiveTab='hey' views={{ 'hey': <div>hey</div>, 'hi': <div>hi</div> }} />
             </div>
           )
           : null
