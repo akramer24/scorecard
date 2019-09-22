@@ -2,8 +2,9 @@ import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import uniqid from 'uniqid';
+import history from '../../history';
 import { firebaseConfig } from '../../secrets';
-import store, { showFormError, removeFormError, setCurrentUser, removeCurrentUser } from '../../store';
+import store, { showFormError, removeFormError, setCurrentUser, removeCurrentUser, getUser, getLeague } from '../../store';
 
 class Firebase {
   constructor() {
@@ -14,9 +15,20 @@ class Firebase {
 
   getCurrentUser = () => this.auth.currentUser;
 
-  getUserFromDb = async uid => {
+  setCurrentUser = () => {
+    const user = this.getCurrentUser();
+    store.dispatch(setCurrentUser(user));
+  }
+
+  getUserById = async uid => {
     const doc = await this.db.collection('users').doc(uid).get();
     return doc.data();
+  }
+
+  getAndSetUserById = async uid => {
+    const user = await this.getUserById(uid);
+    store.dispatch(getUser(user));
+    return user;
   }
 
   getAuthStateChanged = cb =>
@@ -31,10 +43,12 @@ class Firebase {
         firstName,
         lastName,
         email: user.email,
+        uid: user.uid
       };
       await this.db.collection('users').doc(user.uid).set(userData);
       store.dispatch(setCurrentUser(userData))
       store.dispatch(removeFormError());
+      history.push(`/users/${user.uid}`);
     } catch (err) {
       store.dispatch(showFormError(err.message));
     }
@@ -42,13 +56,15 @@ class Firebase {
 
   doSignInWithEmailAndPassword = async (email, password) => {
     const res = await this.auth.signInWithEmailAndPassword(email, password);
-    const user = await this.getUserFromDb(res.user.uid);
-    store.dispatch(setCurrentUser(user))
+    const user = await this.getUserById(res.user.uid);
+    store.dispatch(setCurrentUser(user));
+    history.push(`/users/${user.uid}`);
   }
 
   doSignOut = () => {
     this.auth.signOut();
-    store.dispatch(removeCurrentUser())
+    store.dispatch(removeCurrentUser());
+    history.push('/');
   }
 
   doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
@@ -60,7 +76,7 @@ class Firebase {
     try {
       const leagueId = uniqid();
       const user = this.getCurrentUser();
-      const leagueInfo = { ...body, admins: [user.uid] };
+      const leagueInfo = { ...body, admins: [user.uid], members: [user.uid], id: leagueId };
       await this.db.collection('leagues').doc(leagueId).set(leagueInfo);
       const userRef = await this.db.collection('users').doc(user.uid);
       userRef.update({
@@ -68,10 +84,26 @@ class Firebase {
         adminForLeauges: [leagueId]
       });
       return leagueId;
-      // const league = await this.db.collection('leagues').doc(leagueId).get();
-      // return league.data();
     } catch (err) {
       console.log(err);
+    }
+  }
+
+  getLeagueById = async id => {
+    try {
+      const league = await this.db.collection('leagues').doc(id).get();
+      return league.data();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  getLeagues = async (leagues, leaguesOnState) => {
+    for (let id of leagues) {
+      if (!leaguesOnState[id]) {
+        const league = await this.db.collection('leagues').doc(id).get();
+        store.dispatch(getLeague(league.data()));
+      }
     }
   }
 }

@@ -575,6 +575,11 @@
 .loading-image {
   animation: loading 1s infinite linear;
 }
+#league-portal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 body {
   margin: 0;
   font-family: 'Ubuntu', sans-serif;
@@ -690,4 +695,7 @@ code {
 .column {
   display: flex;
   flex-direction: column;
+}
+.page-header {
+  font-size: 30px;
 }

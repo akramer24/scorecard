@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store, { setCurrentUser } from './store';
+import store, { attemptedLoadUser, setCurrentUser } from './store';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -14,9 +14,10 @@ const firebase = new Firebase();
 firebase.getAuthStateChanged(async currentUser => {
   let userData = null;
   if (currentUser) {
-    userData = await firebase.getUserFromDb(currentUser.uid);
+    userData = await firebase.getUserById(currentUser.uid);
   }
-  store.dispatch(setCurrentUser(userData))
+  store.dispatch(setCurrentUser(userData));
+  store.dispatch(attemptedLoadUser());
 });
 
 ReactDOM.render(
