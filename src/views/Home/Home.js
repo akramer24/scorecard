@@ -4,7 +4,7 @@ import { Load } from '../../components';
 import { Auth } from '../index';
 import { withFirebase } from '../../components/Firebase';
 
-const Home = ({ attemptedLoadUser, firebase, user }) => {
+const Home = ({ attemptedLoadUser, location, user }) => {
   return (
     <div id="home">
       <Load loading={!attemptedLoadUser} />
@@ -16,7 +16,7 @@ const Home = ({ attemptedLoadUser, firebase, user }) => {
             </div>
           )
           : attemptedLoadUser
-            ? <Auth />
+            ? <Auth location={location} />
             : null
       }
     </div>

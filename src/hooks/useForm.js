@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-const useForm = (submitCallback, initialState) => {
+const useForm = (submitCallback, initialState, location) => {
   const [inputs, setInputs] = useState(initialState);
 
   const handleSubmit = async evt => {
     try {
       evt && evt.preventDefault();
-      await submitCallback(inputs);
+      await submitCallback({ ...inputs, location });
     } catch (err) {
       console.log('err');
     }

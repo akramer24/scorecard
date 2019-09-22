@@ -4,7 +4,7 @@ import { Button, Input } from '../../components';
 import { withFirebase } from '../../components/Firebase';
 import useForm from '../../hooks/useForm';
 
-const Auth = ({ authFormError, firebase }) => {
+const Auth = ({ authFormError, firebase, location }) => {
   const [error, setError] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
   const formError =
@@ -14,11 +14,11 @@ const Auth = ({ authFormError, firebase }) => {
         ? authFormError
         : null
 
-  const firebaseAuth = async ({ email, passwordOne, firstName, lastName }) => {
+  const firebaseAuth = async ({ email, passwordOne, firstName, lastName, location }) => {
     try {
       isSignUp
-        ? await firebase.doSignUp(email, passwordOne, firstName, lastName)
-        : await firebase.doSignInWithEmailAndPassword(email, passwordOne);
+        ? await firebase.doSignUp(email, passwordOne, firstName, lastName, location.pathname)
+        : await firebase.doSignInWithEmailAndPassword(email, passwordOne, location.pathname);
     } catch (err) {
       setError(err.message);
     }
@@ -33,7 +33,7 @@ const Auth = ({ authFormError, firebase }) => {
     passwordTwo: ''
   };
 
-  const { inputs, handleSubmit, handleChange } = useForm(firebaseAuth, initialState);
+  const { inputs, handleSubmit, handleChange } = useForm(firebaseAuth, initialState, location);
 
   return (
     <form id="auth-form" onSubmit={handleSubmit}>

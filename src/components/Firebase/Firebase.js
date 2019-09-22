@@ -1,6 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import 'firebase/firebase-functions';
 import uniqid from 'uniqid';
 import history from '../../history';
 import { firebaseConfig } from '../../secrets';
@@ -11,6 +12,7 @@ class Firebase {
     app.initializeApp(firebaseConfig);
     this.auth = app.auth();
     this.db = app.firestore();
+    this.functions = app.functions();
   }
 
   getCurrentUser = () => this.auth.currentUser;
@@ -34,7 +36,7 @@ class Firebase {
   getAuthStateChanged = cb =>
     this.auth.onAuthStateChanged(cb);
 
-  doSignUp = async (email, password, firstName, lastName) => {
+  doSignUp = async (email, password, firstName, lastName, path) => {
     try {
       const { user } = await this.auth.createUserWithEmailAndPassword(email, password);
       await user.updateProfile({ displayName: firstName + ' ' + lastName });
@@ -48,17 +50,17 @@ class Firebase {
       await this.db.collection('users').doc(user.uid).set(userData);
       store.dispatch(setCurrentUser(userData))
       store.dispatch(removeFormError());
-      history.push(`/users/${user.uid}`);
+      path === '/' ? history.push(`/users/${user.uid}`) : history.push(path);
     } catch (err) {
       store.dispatch(showFormError(err.message));
     }
   }
 
-  doSignInWithEmailAndPassword = async (email, password) => {
+  doSignInWithEmailAndPassword = async (email, password, path) => {
     const res = await this.auth.signInWithEmailAndPassword(email, password);
     const user = await this.getUserById(res.user.uid);
     store.dispatch(setCurrentUser(user));
-    history.push(`/users/${user.uid}`);
+    path === '/' ? history.push(`/users/${user.uid}`) : history.push(path);
   }
 
   doSignOut = () => {
@@ -92,6 +94,7 @@ class Firebase {
   getLeagueById = async id => {
     try {
       const league = await this.db.collection('leagues').doc(id).get();
+      store.dispatch(getLeague(league.data()));
       return league.data();
     } catch (err) {
       console.log(err);
@@ -104,6 +107,14 @@ class Firebase {
         const league = await this.db.collection('leagues').doc(id).get();
         store.dispatch(getLeague(league.data()));
       }
+    }
+  }
+
+  sendMail = async data => {
+    try {
+      await this.functions.httpsCallable('sendMail')(data);
+    } catch (err) {
+      console.log(err)
     }
   }
 }

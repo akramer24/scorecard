@@ -5,23 +5,27 @@ import { withFirebase } from './components/Firebase';
 import { Routes } from './views';
 import history from './history';
 
-const App = ({ firebase, user }) => {
-  const choices = [
+const App = ({ firebase, authUser }) => {
+  const mainChoices = [
     { value: 'Create league', onClick: () => { history.push('/create-league') } },
   ]
-  user && choices.push({
-    value: 'Sign out', onClick: () => {
-      firebase.doSignOut();
-    }
-  })
+
+  const userChoices = [
+    { value: 'My page', onClick: () => history.push(`/users/${authUser.uid}`) },
+    { value: 'Sign out', onClick: () => firebase.doSignOut() }
+  ]
+
   return (
     <React.Fragment>
       {
-        !!user
+        !!authUser
           ? (
             <div id="header">
-              <Dropdown choices={choices} icon="FaBars" />
-              <div id="header-text" onClick={() => history.push('/')}>Scorecard</div>
+              <div id="header-left">
+                <Dropdown choices={mainChoices} icon="FaBars" />
+                <div id="header-text" onClick={() => history.push('/')}>Scorecard</div>
+              </div>
+              <Dropdown choices={userChoices} icon="FaUser" align='right' />
             </div>
           )
           : null
@@ -32,7 +36,7 @@ const App = ({ firebase, user }) => {
 }
 
 const mapState = state => ({
-  user: state.auth.user
+  authUser: state.auth.user
 })
 
 export default connect(mapState, null)(withFirebase(App));

@@ -2,8 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Load, Tabs } from '../../components';
 import { withFirebase } from '../../components/Firebase';
+import history from '../../history';
 
-const UserPortal = ({ authUser, firebase, leagues, match, user }) => {
+const getMyLeagues = (userLeagues, stateLeagues) => {
+  return userLeagues && userLeagues.map(leagueId => {
+    return stateLeagues[leagueId] ? (
+      <div
+        key={leagueId}
+        onClick={() => history.push(`/leagues/${leagueId}`)}
+      >
+        {stateLeagues[leagueId].name}
+      </div>
+    ) : null
+  })
+}
+
+const UserPortal = ({ firebase, leagues, match, user }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -17,25 +31,24 @@ const UserPortal = ({ authUser, firebase, leagues, match, user }) => {
     } catch (err) {
       console.log(err);
     }
-  }, [match.params.userId])
+  }, [match.params.userId, leagues, firebase])
 
   return (
     <div id="user-portal">
       <Load loading={loading} />
       {
-        user
+        !!user && user.displayName
           ? (
-            <div className="user-portal-header">
-              <div className="page-header">{user.displayName}</div>
-              {
-                user.memberOfLeagues && user.memberOfLeagues.map(leagueId => {
-                  return leagues[leagueId] ? (
-                    <div key={leagueId}>{leagues[leagueId].name}</div>
-                  ) : null
-                })
-              }
-              <Tabs defaultActiveTab='hey' views={{ 'hey': <div>hey</div>, 'hi': <div>hi</div> }} />
-            </div>
+            <React.Fragment>
+              <div className="user-portal-header">
+                <div className="page-header">{user.displayName}</div>
+              </div>
+              <Tabs
+                className="user-portal-body"
+                defaultActiveTab='My Leagues'
+                views={{ 'My Leagues': getMyLeagues(user.memberOfLeagues, leagues) }}
+              />
+            </React.Fragment>
           )
           : null
       }
@@ -44,7 +57,6 @@ const UserPortal = ({ authUser, firebase, leagues, match, user }) => {
 }
 
 const mapState = state => ({
-  authUser: state.auth.user,
   user: state.user,
   leagues: state.leagues
 })

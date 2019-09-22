@@ -1,33 +1,52 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { Load } from '../../components';
+import { Button, Load, Tabs } from '../../components';
+import withLeague from '../hocs/withLeague';
+import history from '../../history';
 import { withFirebase } from '../../components/Firebase';
 
-const LeaguePortal = ({ firebase, match, user }) => {
-  const [league, setLeague] = useState(null);
-  const [loading, setLoading] = useState(true);
+const getLeagueTeams = (league, stateTeams, user) => {
+  return league.teams
+    ? league.teams.map(teamId => {
+      return stateTeams[teamId]
+        ? (
+          <div
+            key={teamId}
+            onClick={() => history.push(`/leagues/${league.id}/teams/${teamId}`)}
+          >
+            {stateTeams[teamId].name}
+          </div>
+        )
+        : null
+    })
+    : (
+      <div className="league-portal-no-teams-container">
+        <div>No teams in this league.</div>
+        {
+          user && league.admins && league.admins.includes(user.uid) &&
+          <Button onClick={() => history.push(`/leagues/${league.id}/new-team`)}>Add team</Button>
+        }
+      </div>
+    )
+}
 
-  useEffect(() => {
-    const fetchLeague = async () => {
-      const league = await firebase.getLeagueById(match.params.leagueId);
-      if (user && (league.admins.includes(user.uid) || league.members.includes(user.uid))) {
-        setLeague(league);
-        setLoading(false);
-      }
-    };
-    fetchLeague();
-  }, [user])
-
+const LeaguePortal = ({ league, loading, stateTeams, user }) => {
   return (
     <div id="league-portal">
       <Load loading={loading} />
       {
         league
           ? (
-            <div className="league-portal-header">
-              <div className="page-header">{league.name}</div>
-              <div>{league.year}</div>
-            </div>
+            <React.Fragment>
+              <div className="league-portal-header">
+                <div className="page-header">{league.name}</div>
+                <div>{league.year}</div>
+              </div>
+              <Tabs
+                className="league-portal-body"
+                views={{ 'Teams': getLeagueTeams(league, stateTeams, user) }}
+              />
+            </React.Fragment>
           )
           : null
       }
@@ -36,7 +55,9 @@ const LeaguePortal = ({ firebase, match, user }) => {
 }
 
 const mapState = state => ({
-  user: state.auth.user
+  user: state.auth.user,
+  leagues: state.leagues,
+  stateTeams: state.teams
 })
 
-export default connect(mapState, null)(withFirebase(LeaguePortal));
+export default connect(mapState, null)(withFirebase(withLeague(LeaguePortal)));
