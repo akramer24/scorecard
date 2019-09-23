@@ -11,6 +11,7 @@ const withLeague = View => props => {
         leagues[match.params.leagueId]
           ? leagues[match.params.leagueId]
           : await firebase.getLeagueById(match.params.leagueId)
+      await firebase.getTeams(league.teams);
       if (user && (league.admins.includes(user.uid) || league.members.includes(user.uid))) {
         setLoading(false);
       }

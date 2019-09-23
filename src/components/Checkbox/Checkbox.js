@@ -33,7 +33,7 @@ const Checkbox = ({
   )
 }
 
-Checkbox.defaultProps = {
+Checkbox.propTypes = {
   /**
    * Determines whether or not Checkbox has focus on mount.
    */
