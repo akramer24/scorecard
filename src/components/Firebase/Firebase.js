@@ -5,7 +5,16 @@ import 'firebase/firebase-functions';
 import uniqid from 'uniqid';
 import history from '../../history';
 import { firebaseConfig } from '../../secrets';
-import store, { showFormError, removeFormError, setCurrentUser, removeCurrentUser, getUser, getLeague, getTeam } from '../../store';
+import store, {
+  getLeague,
+  getPlayer,
+  getTeam,
+  getUser,
+  removeCurrentUser,
+  removeFormError,
+  setCurrentUser,
+  showFormError,
+} from '../../store';
 
 class Firebase {
   constructor() {
@@ -32,6 +41,12 @@ class Firebase {
     const user = await this.getUserById(uid);
     store.dispatch(getUser(user));
     return user;
+  }
+
+  getUsers = userId => {
+    userId && userId.forEach(async id => {
+      await this.getAndSetUserById(id);
+    });
   }
 
   getAuthStateChanged = cb =>
@@ -125,19 +140,30 @@ class Firebase {
   }
 
   getLeagues = async (leagues, leaguesOnState) => {
-    for (let id of leagues) {
-      if (!leaguesOnState[id]) {
-        const league = await this.db.collection('leagues').doc(id).get();
-        store.dispatch(getLeague(league.data()));
+    if (leagues) {
+      for (let id of leagues) {
+        if (!leaguesOnState[id]) {
+          const league = await this.db.collection('leagues').doc(id).get();
+          store.dispatch(getLeague(league.data()));
+        }
       }
     }
   }
 
-  getTeams = async teamIds => {
+  getTeams = teamIds => {
     teamIds && teamIds.forEach(async id => {
+      await this.getTeamById(id);
+    });
+  }
+
+  getTeamById = async id => {
+    try {
       const team = await this.db.collection('teams').doc(id).get();
       store.dispatch(getTeam(team.data()));
-    });
+      return team.data();
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   doCreateTeam = async (name, players, league, isCreatorOnTeam, origin) => {
@@ -168,6 +194,7 @@ class Firebase {
       }
       const teamInfo = { name, admins: [user.uid], members, id: teamId, leagueId: league.id, sport: league.sport, leagueName: league.name };
       await this.db.collection('teams').doc(teamId).set(teamInfo);
+      await this.getLeagueById(league.id);
       players.forEach(p => {
         this.sendMail({
           to: p.email, subject: 'You have been added to a team!', body: `
@@ -186,7 +213,8 @@ class Firebase {
             <div>To view your team page, <a href=${origin}/leagues/${league.id}/teams/${teamId}>click here</a>.</div>
           </div>
         `
-      })
+      });
+      history.push(`/leagues/${league.id}/teams/${teamId}`);
       return teamId;
     } catch (err) {
       console.log(err);

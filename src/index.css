@@ -487,6 +487,10 @@
 }
 .ari-ui-tabs-content {
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 .ari-ui-tabs .ari-ui-tab {
   padding: 0px 5px;
@@ -623,11 +627,6 @@
   flex-direction: column;
   align-items: center;
 }
-.user-portal-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 body {
   margin: 0;
   font-family: 'Ubuntu', sans-serif;
@@ -642,9 +641,9 @@ code {
 #root {
   height: 100vh;
 }
-.hoverable-text {
+.hoverable-text:hover {
   cursor: pointer;
-  color: #e3f9ff;
+  color: #dadada;
 }
 #header {
   display: flex;
@@ -661,9 +660,9 @@ code {
 #header-text {
   font-size: 24px;
 }
-#header-text:hover {
+#header-text:hover:hover {
   cursor: pointer;
-  color: #e3f9ff;
+  color: #dadada;
 }
 .ari-ui-padded-content {
   padding: 10px 20px 10px 20px;
@@ -748,6 +747,11 @@ code {
 .column {
   display: flex;
   flex-direction: column;
+}
+.portal-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .page-header {
   font-size: 30px;

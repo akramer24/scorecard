@@ -5,9 +5,9 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import auth from './auth';
 import leagues from './leagues';
 import teams from './teams';
-import user from './user';
+import users from './users';
 
-const reducer = combineReducers({ auth, leagues, teams, user });
+const reducer = combineReducers({ auth, leagues, teams, users });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );
@@ -17,4 +17,4 @@ export default store;
 export * from './auth';
 export * from './leagues';
 export * from './teams';
-export * from './user';
+export * from './users';

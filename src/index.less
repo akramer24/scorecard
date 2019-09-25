@@ -20,6 +20,7 @@
 @import './views/CreateLeague/CreateLeague.less';
 @import './views/Home/Home.less';
 @import './views/LeaguePortal/LeaguePortal.less';
+@import './views/TeamPortal/TeamPortal.less';
 @import './views/UserPortal/UserPortal.less';
 @import './mixins.less';
 
@@ -50,8 +51,10 @@ code {
 }
 
 .hoverable-text {
-  cursor: pointer;
-  color: @tertiary-color;
+  &:hover {
+    cursor: pointer;
+    color: @secondary-color;
+  }
 }
 
 #header {
@@ -171,6 +174,11 @@ code {
 .column {
   display: flex;
   flex-direction: column;
+}
+
+.portal-header {
+  .column();
+  align-items: center;
 }
 
 .page-header {

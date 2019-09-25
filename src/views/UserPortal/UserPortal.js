@@ -9,6 +9,7 @@ const getMyLeagues = (userLeagues, stateLeagues) => {
     return stateLeagues[leagueId] ? (
       <div
         key={leagueId}
+        className="hoverable-text"
         onClick={() => history.push(`/leagues/${leagueId}`)}
       >
         {stateLeagues[leagueId].name}
@@ -17,8 +18,9 @@ const getMyLeagues = (userLeagues, stateLeagues) => {
   })
 }
 
-const UserPortal = ({ firebase, leagues, match, user }) => {
+const UserPortal = ({ firebase, leagues, match, users }) => {
   const [loading, setLoading] = useState(true);
+  const user = users[match.params.userId];
 
   useEffect(() => {
     const getUser = async () => {
@@ -40,7 +42,7 @@ const UserPortal = ({ firebase, leagues, match, user }) => {
         !!user && user.displayName
           ? (
             <React.Fragment>
-              <div className="user-portal-header">
+              <div className="portal-header">
                 <div className="page-header">{user.displayName}</div>
               </div>
               <Tabs
@@ -57,7 +59,7 @@ const UserPortal = ({ firebase, leagues, match, user }) => {
 }
 
 const mapState = state => ({
-  user: state.user,
+  users: state.users,
   leagues: state.leagues
 })
 
