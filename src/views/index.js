@@ -1,4 +1,5 @@
 export { default as Auth } from './Auth/Auth';
+export { default as CreateGame } from './CreateGame/CreateGame';
 export { default as CreateLeague } from './CreateLeague/CreateLeague';
 export { default as CreateTeam } from './CreateTeam/CreateTeam';
 export { default as Home } from './Home/Home';

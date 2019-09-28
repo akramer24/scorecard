@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import "react-datepicker/dist/react-datepicker.css";
+
 import store, { attemptedLoadUser, setCurrentUser } from './store';
 import './index.css';
 import App from './App';

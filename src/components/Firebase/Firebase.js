@@ -6,9 +6,11 @@ import uniqid from 'uniqid';
 import history from '../../history';
 import { firebaseConfig } from '../../secrets';
 import store, {
+  getGame,
+  getGames,
   getLeague,
-  getPlayer,
   getTeam,
+  getTeams,
   getUser,
   removeCurrentUser,
   removeFormError,
@@ -129,11 +131,14 @@ class Firebase {
     }
   }
 
-  getLeagueById = async id => {
+  getLeagueById = async (id, shouldFetchRelations) => {
     try {
       const league = await this.db.collection('leagues').doc(id).get();
-      store.dispatch(getLeague(league.data()));
-      return league.data();
+      const leagueData = league.data();
+      shouldFetchRelations && await this.getTeams(leagueData.teams);
+      shouldFetchRelations && await this.getGames(leagueData.games);
+      store.dispatch(getLeague(leagueData));
+      return leagueData;
     } catch (err) {
       console.log(err);
     }
@@ -150,10 +155,12 @@ class Firebase {
     }
   }
 
-  getTeams = teamIds => {
-    teamIds && teamIds.forEach(async id => {
-      await this.getTeamById(id);
-    });
+  getTeams = async teamIds => {
+    const teams = teamIds && await Promise.all(teamIds.map(async id => {
+      const team = await this.db.collection('teams').doc(id).get();
+      return team.data();
+    }));
+    teams && store.dispatch(getTeams(teams));
   }
 
   getTeamById = async id => {
@@ -218,6 +225,46 @@ class Firebase {
       return teamId;
     } catch (err) {
       console.log(err);
+    }
+  }
+
+  doCreateGame = async ({ date, time, away, home, location, leagueId }) => {
+    const gameId = uniqid();
+    const gameInfo = {
+      id: gameId,
+      date,
+      time,
+      awayId: away.value,
+      awayName: away.label,
+      homeId: home.value,
+      homeName: home.label,
+      location,
+      leagueId
+    };
+    await this.db.collection('games').doc(gameId).set(gameInfo);
+    const leagueRef = await this.db.collection('leagues').doc(leagueId);
+    leagueRef.update({
+      games: this.firebase.firestore.FieldValue.arrayUnion(gameId),
+    });
+    store.dispatch(getGame(gameInfo));
+    history.push(`/leagues/${leagueId}`);
+  }
+
+  getGames = async gameIds => {
+    const games = gameIds && await Promise.all(gameIds.map(async id => {
+      const game = await this.db.collection('games').doc(id).get();
+      return game.data();
+    }));
+    games && store.dispatch(getGames(games));
+  }
+
+  getGameById = async id => {
+    try {
+      const game = await this.db.collection('games').doc(id).get();
+      store.dispatch(getGame(game.data()));
+      return game.data();
+    } catch (err) {
+      console.log(err)
     }
   }
 

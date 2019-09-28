@@ -9,6 +9,7 @@ const NAME = 'name';
 const SPORT = 'sport';
 const SEASON = 'season';
 const YEAR = 'year';
+const TIMEZONE = 'timezone';
 const INITIAL_STATE = {
   [NAME]: '',
   [`${NAME}Error`]: '',
@@ -18,6 +19,8 @@ const INITIAL_STATE = {
   [`${SEASON}Error`]: '',
   [YEAR]: '',
   [`${YEAR}Error`]: '',
+  [TIMEZONE]: '',
+  [`${TIMEZONE}Error`]: '',
   loading: false
 }
 
@@ -34,6 +37,7 @@ class CreateLeague extends React.Component {
     this.sportChoices = ['Baseball', 'Basketball'];
     this.seasonChoices = ['Winter', 'Spring', 'Summer', 'Fall'];
     this.yearChoices = [moment().year().toString(), `${moment().year()}-${(moment().year() + 1).toString().slice(-2)}`, (moment().year() + 1).toString()];
+    this.timezoneChoices = ['Eastern', 'Central', 'Mountain', 'Pacific'];
   }
 
   handleInputChange(evt) {
@@ -52,11 +56,30 @@ class CreateLeague extends React.Component {
 
   async handleSubmit() {
     this.setState({ loading: true });
+    let timezone;
+    switch (this.state[TIMEZONE]) {
+      case 'Eastern':
+        timezone = 'America/New_York';
+        break;
+      case 'Central':
+        timezone = 'America/Chicago';
+        break;
+      case 'Mountain':
+        timezone = 'America/Denver';
+        break;
+      case 'Pacific':
+        timezone = 'America/Los_Angeles';
+        break;
+      default:
+        timezone = 'America/New_York';
+    }
+
     const leagueId = await this.props.firebase.doCreateLeague({
       name: this.state[NAME],
       sport: this.state[SPORT],
       season: this.state[SEASON],
-      year: this.state[YEAR]
+      year: this.state[YEAR],
+      timezone
     });
     history.push(`/leagues/${leagueId}`);
   }
@@ -102,6 +125,16 @@ class CreateLeague extends React.Component {
           placeholder={toTitleCase(YEAR)}
           label={toTitleCase(YEAR)}
           error={this.state[`${YEAR}Error`]}
+        />
+        <Select
+          name={TIMEZONE}
+          value={this.state[TIMEZONE]}
+          onChange={evt => this.handleSelectInputChange(evt, TIMEZONE)}
+          onSelectChoice={value => this.handleSelect(value, TIMEZONE)}
+          choices={this.timezoneChoices}
+          placeholder={toTitleCase(TIMEZONE)}
+          label={toTitleCase(TIMEZONE)}
+          error={this.state[`${TIMEZONE}Error`]}
         />
         <Button onClick={this.handleSubmit}>Create</Button>
       </div>

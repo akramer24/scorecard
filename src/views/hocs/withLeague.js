@@ -10,14 +10,13 @@ const withLeague = View => props => {
       const league =
         leagues[match.params.leagueId]
           ? leagues[match.params.leagueId]
-          : await firebase.getLeagueById(match.params.leagueId)
-      await firebase.getTeams(league.teams);
-      if (user && (league.admins.includes(user.uid) || league.members.includes(user.uid))) {
+          : await firebase.getLeagueById(match.params.leagueId, true)
+      if (user && league && (league.admins.includes(user.uid) || league.members.includes(user.uid))) {
         setLoading(false);
       }
     };
     fetchLeague();
-  }, [user, leagues, match.params.leagueId, firebase])
+  }, [user, leagues, firebase, match.params.leagueId])
   return (
     <View league={league} loading={loading} {...props} />
   )

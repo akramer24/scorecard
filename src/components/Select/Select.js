@@ -152,12 +152,19 @@ class Select extends React.Component {
   }
 
   static filterChoices(choices, value) {
-    return choices.filter(c => c.toLowerCase().includes(value.toLowerCase()));
+    return choices.filter(c => Select.getChoice(c).toLowerCase().includes(value.toLowerCase()));
+  }
+
+  static getChoice(choice, labelOnly) {
+    if (typeof choice === 'object') {
+      return labelOnly ? choice.label : choice.value;
+    }
+    return choice;
   }
 
   render() {
     const { activeChoiceIndex, filteredChoices, isDropdownVisible } = this.state;
-    const { placeholder, searchable, value } = this.props;
+    const { labelOnly, placeholder, searchable, value } = this.props;
 
     return (
       <div id={this.id} className="ari-ui-select-container">
@@ -185,7 +192,7 @@ class Select extends React.Component {
             }
             onClick={this.handleCaretClick}
           />}
-          value={value}
+          value={Select.getChoice(value, labelOnly)}
         />
         {
           isDropdownVisible
@@ -193,9 +200,11 @@ class Select extends React.Component {
               <Dropdown
                 activeChoiceIndex={activeChoiceIndex}
                 choices={filteredChoices}
+                getChoice={Select.getChoice}
                 handleHoverChoice={this.handleHoverChoice}
                 handleSelectChoice={this.handleSelectChoice}
                 id={this.dropdownId}
+                labelOnly={labelOnly}
                 parentId={this.id}
               />
             )
@@ -210,7 +219,12 @@ Select.propTypes = {
   /**
    * Choices that populate dropdown.
    */
-  choices: PropTypes.arrayOf(PropTypes.string),
+  choices: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object
+    ])
+  ),
   /**
    * Placeholder text.
    */
@@ -228,7 +242,10 @@ Select.propTypes = {
   /**
    * Value of Select.
    */
-  value: PropTypes.string
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object
+  ])
 }
 
 export default withForm(Select);

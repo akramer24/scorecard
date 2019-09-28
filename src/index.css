@@ -205,6 +205,7 @@
 .ari-ui-card {
   min-width: 150px;
   height: fit-content;
+  margin: 10px;
 }
 .ari-ui-card-bordered {
   box-shadow: 0px 0px 1px 1px #dadada;
@@ -660,9 +661,9 @@ code {
 #header-text {
   font-size: 24px;
 }
-#header-text:hover:hover {
+#header-text:hover {
+  color: #e3f9ff;
   cursor: pointer;
-  color: #dadada;
 }
 .ari-ui-padded-content {
   padding: 10px 20px 10px 20px;
@@ -753,9 +754,28 @@ code {
   flex-direction: column;
   align-items: center;
 }
+.header {
+  margin-bottom: 16px;
+}
 .page-header {
   font-size: 30px;
 }
 .medium-header {
   font-size: 20px;
+}
+.react-datepicker__input-container input {
+  border: 1px solid #12125e;
+  font-size: 14px;
+  transition: 0.3s;
+  padding-left: 12px;
+  flex-grow: 1;
+  border-radius: 15px;
+}
+.react-datepicker__input-container input:focus {
+  outline: none;
+  border: none;
+  box-shadow: 0px 0px 10px 1px #12125e;
+}
+.small-text {
+  font-size: 10px;
 }

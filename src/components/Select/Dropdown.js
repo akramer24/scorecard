@@ -7,9 +7,11 @@ const Dropdown = ({
   activeChoiceIndex,
   choices,
   choiceHeight,
+  getChoice,
   handleHoverChoice,
   handleSelectChoice,
   id,
+  labelOnly,
   parentId
 }) => {
   const maxToRender = 30;
@@ -56,7 +58,7 @@ const Dropdown = ({
               onMouseEnter={() => handleHoverChoice(idx)}
               style={{ height: choiceHeight - (2 * topBottomPadding), padding: `${topBottomPadding}px ${leftRightPadding}px` }}
             >
-              {c}
+              {getChoice(c, labelOnly)}
             </div>
           )
         })
