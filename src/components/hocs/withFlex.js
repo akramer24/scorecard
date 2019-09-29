@@ -3,6 +3,7 @@ import classNames from 'classnames';
 
 const withFlex = (Component, direction) => ({
   children,
+  className,
   horizontalAlignment,
   style,
   verticalAlignment,
@@ -75,7 +76,8 @@ const withFlex = (Component, direction) => ({
         {
           'ari-ui-flex-row': direction === 'row',
           'ari-ui-flex-column': direction === 'column',
-          'ari-ui-wrap': wrap
+          'ari-ui-wrap': wrap,
+          [className]: className
         }
       )}
       style={style}

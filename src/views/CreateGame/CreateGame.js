@@ -41,7 +41,7 @@ class CreateGame extends React.Component {
     const { league } = this.props;
     evt.preventDefault();
     evt.stopPropagation();
-    const momentizedDate = moment.tz(date, league.timezone).format('MM/DD/YYYY');
+    const momentizedDate = moment.tz(date, league.timezone).format('YYYY/MM/DD');
     const momentizedTime = moment.tz(date, league.timezone).format('H:mm');
     this.props.firebase.doCreateGame({ away, home, date: momentizedDate, time: momentizedTime, location, leagueId: this.props.league.id });
   }

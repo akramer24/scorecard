@@ -54,26 +54,52 @@ class Firebase {
   getAuthStateChanged = cb =>
     this.auth.onAuthStateChanged(cb);
 
-  doLookupOrCreateTempUserByEmail = async user => {
+  doLookupUserByEmail = async email => {
     try {
       const querySnapshot =
         await this.db.collection('users')
-          .where('email', '==', user.email)
+          .where('email', '==', email)
           .get();
       let foundUser;
       querySnapshot.forEach(doc => {
         foundUser = doc.data();
       });
-      if (foundUser) {
-        return foundUser;
+
+      return foundUser;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  doLookupOrCreateUserByEmail = async user => {
+    try {
+      const lookedUpUser = await this.doLookupUserByEmail(user.email);
+      if (lookedUpUser) {
+        return lookedUpUser;
       }
       const uid = uniqid();
-      const createdUser = { ...user, uid, temp: true };
+      const createdUser = { ...user, uid };
       await this.db.collection('users').doc(uid).set(createdUser);
       return createdUser;
     } catch (err) {
       console.log(err);
     }
+  }
+
+  doReplaceUids = async (newId, oldId, leagues, teams) => {
+    const updateRefs = async collectionName => {
+      const collection = collectionName === 'leagues' ? leagues : teams;
+      collection.forEach(async item => {
+        const ref = await this.db.collection(collectionName).doc(item);
+        const doc = await ref.get();
+        const data = doc.data();
+        const oldIndex = data.members.indexOf(oldId);
+        data.members[oldIndex] = newId;
+        await ref.update({ members: data.members });
+      })
+    }
+    await updateRefs('leagues');
+    await updateRefs('teams');
   }
 
   doSignUp = async (email, password, firstName, lastName, path) => {
@@ -87,10 +113,20 @@ class Firebase {
         email: user.email,
         uid: user.uid
       };
+      const queriedUser = await this.doLookupUserByEmail(user.email);
+      if (queriedUser) {
+        const userRef = await this.db.collection('users').doc(queriedUser.uid);
+        const userDoc = await userRef.get();
+        const data = userDoc.data();
+        await this.doReplaceUids(user.uid, data.uid, data.memberOfLeagues, data.memberOfTeams);
+        userData.memberOfLeagues = data.memberOfLeagues;
+        userData.memberOfTeams = data.memberOfTeams;
+        await userRef.delete();
+      }
       await this.db.collection('users').doc(user.uid).set(userData);
       store.dispatch(setCurrentUser(userData));
       store.dispatch(removeFormError());
-      path === '/' ? history.push(`/users/${user.uid}`) : history.push(path);
+      path === '/' ? history.push(`/users/${userData.uid}`) : history.push(path);
     } catch (err) {
       store.dispatch(showFormError(err.message));
     }
@@ -136,7 +172,7 @@ class Firebase {
       const league = await this.db.collection('leagues').doc(id).get();
       const leagueData = league.data();
       shouldFetchRelations && await this.getTeams(leagueData.teams);
-      shouldFetchRelations && await this.getGames(leagueData.games);
+      shouldFetchRelations && await this.getLeagueGames(leagueData.schedule);
       store.dispatch(getLeague(leagueData));
       return leagueData;
     } catch (err) {
@@ -190,7 +226,7 @@ class Firebase {
       const teamId = uniqid();
       const user = this.getCurrentUser();
       const members = await Promise.all(players.map(async p => {
-        const user = await this.doLookupOrCreateTempUserByEmail(p);
+        const user = await this.doLookupOrCreateUserByEmail(p);
         await updateUserAndLeague(user.uid, league.id, teamId);
         return user.uid;
       }));
@@ -243,11 +279,37 @@ class Firebase {
     };
     await this.db.collection('games').doc(gameId).set(gameInfo);
     const leagueRef = await this.db.collection('leagues').doc(leagueId);
+    const league = await leagueRef.get();
+    const leagueData = league.data();
+    const dateGames =
+      leagueData.schedule && leagueData.schedule[date]
+        ? [...leagueData.schedule[date], gameId]
+        : [gameId]
+    const schedule = leagueData.schedule ? { ...leagueData.schedule, [date]: dateGames } : { [date]: dateGames };
     leagueRef.update({
-      games: this.firebase.firestore.FieldValue.arrayUnion(gameId),
+      schedule
     });
+    const updateTeam = async id => {
+      const ref = await this.db.collection('teams').doc(id);
+      ref.update({
+        games: this.firebase.firestore.FieldValue.arrayUnion(gameId)
+      });
+    }
+    await updateTeam(away.value);
+    await updateTeam(home.value);
     store.dispatch(getGame(gameInfo));
     history.push(`/leagues/${leagueId}`);
+  }
+
+  getLeagueGames = async schedule => {
+    const gameDates = schedule ? Object.keys(schedule) : [];
+    const gameIds = [];
+    gameDates.forEach(date => {
+      schedule[date].forEach(id => {
+        gameIds.push(id);
+      });
+    });
+    await this.getGames(gameIds);
   }
 
   getGames = async gameIds => {
